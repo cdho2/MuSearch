@@ -27,7 +27,8 @@ This method returns a JSON object containing the following
 **GET /wikipedia/<keyword>**
 Get the recommended Wikipedia article that corresponds to the keyword
 
-Request parameters
+Request parameters  
+
 | Request Parameter | Value Type | Value               |
 |-------------------|------------|---------------------|
 | URL ending        | String     | Artist or Song name |
