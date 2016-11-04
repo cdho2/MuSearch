@@ -1,8 +1,10 @@
-# MuSearch
+GET /api/v1/twitter/<keyword>
 
--To run, go to terminal and run the command:
+Get tweets about the keyword.
 
-$python app.py
+Request Parameters.
+
+
 
 
 

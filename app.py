@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 import app
-import tweepy
+import requests
 import json
+import tweepy
 import urllib2
 import wikipedia
 import spotipy
@@ -40,20 +41,21 @@ def keyword_search(keyword):
     """
     try:
         #Search artists, if nothing is found, then search for the song
-        artist = spotify_search_artist(keyword)
+        artist = json.loads(spotify_search_artist(keyword))
+
     except (IndexError):
         artist = spotify_search_song(keyword)
 
     artist_id = artist['id']
     artist_name = artist['name']
-    playlist = spotify_search_playlist(artist_id)
-    summary = wikipedia_search(artist_name)
-    tweets = tweet_search(artist_name)
+    playlist = json.loads(spotify_search_playlist(artist_id))
+    summary = json.loads(wikipedia_search(artist_name))
+    tweets = json.loads(tweet_search(artist_name))
 
     data = {'artist_name':artist_name,'summary':summary,
     'tweets':tweets, 'playlist':playlist}
 
-    return jsonify(results=data)
+    return json.dumps(data)
 
 @app.route('/api/v1/twitter/<keyword>', methods=['GET'])
 def tweet_search(keyword):
@@ -66,7 +68,7 @@ def tweet_search(keyword):
     MAX_TWEETS = 5
     searched_tweets = [status for status in tweepy.Cursor(api.search, q=keyword).items(MAX_TWEETS)]
     tweet_texts = [status.text for status in searched_tweets]
-    return tweet_texts
+    return json.dumps(tweet_texts)
 
 
 @app.route('/api/v1/wikipedia/<keyword>', methods=['GET'])
@@ -75,7 +77,7 @@ def wikipedia_search(keyword):
     Returns the summary of the first result from wikipedia from the query <keyword>/
     """
     summary = wikipedia.summary(wikipedia.search(keyword)[0])
-    return summary
+    return json.dumps(summary)
 
 @app.route('/api/v1/spotify/artist/<keyword>', methods=['GET'])
 def spotify_search_artist(keyword):
@@ -85,10 +87,13 @@ def spotify_search_artist(keyword):
     Returns a dictionary containing the name and spotify id of the artist.
     """
     results = spotify.search(q='artist:'+keyword, type = 'artist')
+
+    #Gets artist_id of the song's artist
     artist_id = results['artists']['items'][0]['id']
-    artist_name = results['artists']['items'][0]['name']
+    #Gets the name of the song's artist
+    artist_name = results['artists']['items'][0]['name'] 
     artist = {'name':artist_name, 'id':artist_id}
-    return artist
+    return json.dumps(artist)
 
 @app.route('/api/v1/spotify/song/<keyword>', methods=['GET'])
 def spotify_search_song(keyword):
@@ -98,10 +103,13 @@ def spotify_search_song(keyword):
     Returns a dictionary containing the name and spotify id of the artist.
     """
     results = spotify.search(q='track:'+keyword, type = 'track')
-    artist_id = results['tracks']['items'][0]['artists'][0]['id']
+
+    #Gets artist_id of the song's artist
+    artist_id = results['tracks']['items'][0]['artists'][0]['id'] 
+    #Gets the name of the song's artist
     artist_name = results['tracks']['items'][0]['artists'][0]['name']
     artist = {'name':artist_name, 'id':artist_id}
-    return artist
+    return json.dumps(artist)
 
 @app.route('/api/v1/spotify/playlist/<artist_id>', methods = ['GET'])
 def spotify_search_playlist(artist_id):
@@ -112,7 +120,7 @@ def spotify_search_playlist(artist_id):
     """
     results = spotify.artist_top_tracks('spotify:artist:' + artist_id)
     songs = [results['tracks'][i]['name'] for i in xrange(min(10,len(results['tracks'])))]
-    return songs
+    return json.dumps(songs)
 
 
 if __name__ == '__main__':
