@@ -17,7 +17,7 @@ Request parameters
 |-------------------|------------|---------------------|
 | URL ending        | String     | Artist or Song name |
 
-Response
+Response  
 This method returns a JSON object containing the following
 
 | Reponse | Value Type | Value                                |
@@ -32,7 +32,7 @@ Request parameters
 |-------------------|------------|---------------------|
 | URL ending        | String     | Artist or Song name |
 
-Response
+Response  
 This method returns a JSON object containing the following
 
 | Reponse | Value Type | Value                               |
@@ -48,7 +48,7 @@ Request parameters
 |-------------------|------------|-------------|
 | URL ending        | String     | Artist name |
 
-Response
+Response  
 This method returns a JSON object containing the following
 
 | Reponse | Value Type | Value              |
@@ -80,7 +80,7 @@ Request parameters
 |-------------------|------------|-----------|
 | URL ending        | String     | Artist ID |
 
-Response
+Response  
 This method returns a JSON object containing the following
 
 | Reponse | Value Type | Value              |
