@@ -12,6 +12,7 @@ This API allows you to perform searches for artists and songs on Twitter, Wikipe
 Get latest tweets about the keyword
 
 Request parameters
+
 | Request Parameter | Value Type | Value               |
 |-------------------|------------|---------------------|
 | URL ending        | String     | Artist or Song name |
@@ -42,6 +43,7 @@ This method returns a JSON object containing the following
 Get the name and ID of the artist corresponding to the search keyword
 
 Request parameters
+
 | Request Parameter | Value Type | Value       |
 |-------------------|------------|-------------|
 | URL ending        | String     | Artist name |
@@ -57,6 +59,7 @@ This method returns a JSON object containing the following
 Get the name and ID of the artist corresponding to the search keyword
 
 Request parameters
+
 | Request Parameter | Value Type | Value     |
 |-------------------|------------|-----------|
 | URL ending        | String     | Song name |
@@ -72,6 +75,7 @@ This method returns a JSON object containing the following
 Get the top ten tracks from a specific artist
 
 Request parameters
+
 | Request Parameter | Value Type | Value     |
 |-------------------|------------|-----------|
 | URL ending        | String     | Artist ID |
